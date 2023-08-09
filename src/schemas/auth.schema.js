@@ -48,11 +48,6 @@ export const serviceProviderSignUpSchema = Joi.object({
         "string.length": "CEP com formato inválido.",
         "string.pattern.base": "CEP com formato inválido.",
     }),
-    address: Joi.string().max(255).required().messages({
-        "any.required": "Endereço é obrigatório",
-        "string.empty": "Endereço não pode ser vazio.",
-        "string.max": "Tamanho máximo para endereço excedido.",
-    }),
     city: Joi.string().max(255).required().messages({
         "any.required": "Cidade é obrigatória",
         "string.empty": "Cidade não pode ser vazia.",
@@ -63,6 +58,15 @@ export const serviceProviderSignUpSchema = Joi.object({
         "string.empty": "UF não pode ser vazio.",
         "string.length": "UF inválido.",
         "string.pattern.base": "UF com formato inválido.",
+    }),
+    address: Joi.string().max(255).required().messages({
+        "any.required": "Endereço é obrigatório",
+        "string.empty": "Endereço não pode ser vazio.",
+        "string.max": "Tamanho máximo para endereço excedido.",
+    }),
+    complement: Joi.string().max(255).allow('').required().messages({
+        "any.required": "Complemento é obrigatório",
+        "string.max": "Tamanho máximo para complemento excedido.",
     })
 });
 
@@ -77,5 +81,13 @@ export const signInSchema = Joi.object({
         "any.required": "Senha é obrigatória",
         "string.empty": "Senha não pode ser vazia.",
         "string.max": "Tamanho máximo para senha excedida.",
+    })
+});
+
+export const logoutSchema = Joi.object({
+    type: Joi.string().valid('userSession', 'serviceProviderSession').required().messages({
+        "any.required": "Tipo de sessão é obrigatória",
+        "string.empty": "Tipo de sessão não pode ser vazia.",
+        "string.pattern.base": "Formato inválido para tipo de sessão.",
     })
 });
