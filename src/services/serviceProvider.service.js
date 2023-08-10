@@ -24,18 +24,6 @@ const getCreatedServices = async (id) => {
     return services;
 }
 
-const getServiceById = async (id) => {
-
-    const service = await db.query(
-        `SELECT *
-            FROM services
-            WHERE id = $1;
-        `, [id]
-    )
-
-    return service;
-}
-
 const createService = async (payload, id) => {
 
     const {
@@ -93,7 +81,6 @@ const deleteService = async (id) => {
 const serviceProviderService = {
     getServiceProviderSession,
     getCreatedServices,
-    getServiceById,
     createService,
     updateService,
     deleteService
