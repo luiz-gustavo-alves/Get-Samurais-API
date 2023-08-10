@@ -16,11 +16,10 @@ import { serviceProviderAuthValidation } from "../middlewares/serviceProviderAut
 import { serviceIdValidation } from "../middlewares/serviceIdValidation.js";
 
 const serviceProviderRouter = Router();
-serviceProviderRouter.use(serviceProviderAuthValidation);
 
-serviceProviderRouter.get("/services/me", getCreatedServices);
-serviceProviderRouter.post("/services", schemaValidation(serviceSchema), createService);
-serviceProviderRouter.put("/services/:id", schemaValidation(serviceSchema), serviceIdValidation, updateService);
-serviceProviderRouter.delete("/services/:id", serviceIdValidation, deleteService);
+serviceProviderRouter.get("/services/me", serviceProviderAuthValidation, getCreatedServices);
+serviceProviderRouter.post("/api/services", serviceProviderAuthValidation, schemaValidation(serviceSchema), createService);
+serviceProviderRouter.put("/api/services/:id", serviceProviderAuthValidation, schemaValidation(serviceSchema), serviceIdValidation, updateService);
+serviceProviderRouter.delete("/api/services/:id", serviceProviderAuthValidation, serviceIdValidation, deleteService);
 
 export default serviceProviderRouter;
