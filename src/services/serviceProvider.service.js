@@ -12,14 +12,16 @@ const getServiceProviderSession = async (token) => {
     return serviceProviderSession;
 }
 
-const getCreatedServices = async (id) => {
+const getCreatedServices = async (id, offset) => {
 
+    const currentOffset = 10 * (offset);
     const services = await db.query(
         `SELECT *
             FROM services
             WHERE "serviceProviderId" = $1
-            ORDER BY services.id DESC;
-        `, [id]
+            ORDER BY services.id DESC
+            LIMIT 10 OFFSET $2;
+        `, [id, currentOffset]
     )
 
     return services;

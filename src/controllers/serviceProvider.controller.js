@@ -3,9 +3,10 @@ import serviceProviderService from "../services/serviceProvider.service.js";
 export const getCreatedServices = async (req, res) => {
 
     const { serviceProviderId } = res.locals.session;
+    const { offset } = req.query;
 
     try {
-        const services = await serviceProviderService.getCreatedServices(serviceProviderId);
+        const services = await serviceProviderService.getCreatedServices(serviceProviderId, offset);
         res.send(services.rows);
 
     } catch (err) {
