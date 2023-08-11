@@ -4,11 +4,10 @@ const getServices = async (offset) => {
 
     const currentOffset = 20 * (offset);
     const services = await db.query(
-        `SELECT *
-            FROM services
+        `SELECT * FROM services
          WHERE available = 1::bit
-         ORDER BY id DESC
-         LIMIT 20 OFFSET $1;
+            ORDER BY id DESC
+            LIMIT 20 OFFSET $1;
         `, [currentOffset]
     );
 
@@ -19,11 +18,10 @@ const getServicesByRole = async (role, offset) => {
 
     const currentOffset = 20 * (offset);
     const services = await db.query(
-        `SELECT *
-            FROM services
+        `SELECT * FROM services
          WHERE available = 1::bit AND role = $1
-         ORDER BY id DESC
-         LIMIT 20 OFFSET $2;
+            ORDER BY id DESC
+            LIMIT 20 OFFSET $2;
         `, [role, currentOffset]
     );
 
@@ -33,11 +31,18 @@ const getServicesByRole = async (role, offset) => {
 const getServiceById = async (id) => {
 
     const service = await db.query(
-        `SELECT *
-            FROM services
-         WHERE id = $1;
+        `SELECT services.*, 
+                addresses."CEP", 
+                addresses.city, 
+                addresses."UF",
+                addresses.address,
+                addresses.complement
+         FROM services
+         JOIN addresses
+            ON addresses.id = services."serviceProviderId"
+         WHERE available = 1::bit AND services.id = $1;
         `, [id]
-    )
+    );
 
     return service;
 }

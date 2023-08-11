@@ -17,7 +17,8 @@ const getCreatedServices = async (id) => {
     const services = await db.query(
         `SELECT *
             FROM services
-            WHERE "serviceProviderId" = $1;
+            WHERE "serviceProviderId" = $1
+            ORDER BY services.id DESC;
         `, [id]
     )
 
