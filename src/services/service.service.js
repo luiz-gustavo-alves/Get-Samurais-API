@@ -36,10 +36,13 @@ const getServiceById = async (id) => {
                 addresses.city, 
                 addresses."UF",
                 addresses.address,
-                addresses.complement
+                addresses.complement,
+                "serviceProviders"."cellphoneNumber"
          FROM services
          JOIN addresses
             ON addresses.id = services."serviceProviderId"
+         JOIN "serviceProviders"
+            ON "serviceProviders".id = services."serviceProviderId"
          WHERE available = 1::bit AND services.id = $1;
         `, [id]
     );
