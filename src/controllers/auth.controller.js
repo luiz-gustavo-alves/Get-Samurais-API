@@ -45,7 +45,7 @@ export const logout = async (req, res) => {
 
     try {
 
-        await authService.logout({...req.body, token});
+        await authService.logout({...req.body}, token);
         res.sendStatus(200);
 
     } catch (err) {

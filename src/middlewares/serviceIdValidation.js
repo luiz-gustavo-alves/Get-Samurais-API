@@ -1,4 +1,4 @@
-import serviceProviderService from "../services/serviceProvider.service.js";
+import serviceService from "../services/service.service.js";
 
 export const serviceIdValidation = async (req, res, next) => {
 
@@ -6,7 +6,7 @@ export const serviceIdValidation = async (req, res, next) => {
 
     try {
 
-        const service = await serviceProviderService.getServiceById(id);
+        const service = await serviceService.getServiceById(id);
         if (!service.rows[0]) {
             return res.sendStatus(404);
         }

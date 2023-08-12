@@ -11,7 +11,7 @@ export const authValidation = async (req, res, next) => {
 
     try {
 
-        const session = await authService.getToken(token);
+        const session = await authService.getSessionByToken(token);
         if (session === null) {
             return res.sendStatus(401);
         }

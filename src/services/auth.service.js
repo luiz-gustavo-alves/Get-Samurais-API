@@ -140,7 +140,7 @@ const createToken = async (payload) => {
     return { token, type: session.type };
 }
 
-const getToken = async (token) => {
+const getSessionByToken = async (token) => {
 
     const userSession = await db.query(
         `SELECT *
@@ -167,9 +167,9 @@ const getToken = async (token) => {
     return null;
 }
 
-const logout = async (payload) => {
+const logout = async (payload, token) => {
 
-    const { type, token } = payload;
+    const { type } = payload;
 
     if (type === "userSession") {
 
@@ -195,7 +195,7 @@ const authService = {
     findByEmail,
     login,
     createToken,
-    getToken,
+    getSessionByToken,
     logout
 };
 

@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 export const serviceSchema = Joi.object({
-    role: Joi.string().valid('informatica', 'marketing', 'arquitetura', 'financeiro', 'consultoria', 'saude', 'veiculos', 'domestico', 'outros').required().messages({
+    role: Joi.string().valid('tecnologia', 'marketing', 'aulas', 'arquitetura', 'financeiro', 'consultoria', 'saude', 'domestico', 'outros').required().messages({
         "any.required": "Categoria é obrigatória",
         "string.empty": "Categoria não pode ser vazia.",
     }),

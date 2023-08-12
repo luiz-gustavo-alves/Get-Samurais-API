@@ -37,6 +37,7 @@ const getServiceById = async (id) => {
                 addresses."UF",
                 addresses.address,
                 addresses.complement,
+                "serviceProviders".name,
                 "serviceProviders"."cellphoneNumber"
          FROM services
          JOIN addresses
