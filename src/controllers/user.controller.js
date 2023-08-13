@@ -1,6 +1,6 @@
 import userService from "../services/user.service.js";
 
-export const getProfile =  async (req, res) => {
+export const getUserProfile =  async (req, res) => {
 
     const { token } = res.locals.session;
 
@@ -13,6 +13,19 @@ export const getProfile =  async (req, res) => {
     }
 }
 
-export const getServicesStatus = async (req, res) => {
-    res.send(req.body);
+export const getServiceProviderProfile = async (req, res) => {
+
+    const { id } = req.params;
+    
+    try {
+        const serviceProviderProfileInfo = await userService.getServiceProviderProfile(id);
+        res.send(serviceProviderProfileInfo);
+
+    } catch (err) {
+        
+        if (err.code === "22P02") {
+            return res.status(404).send("Perfil não encontrado");
+        }
+        res.status(500).send(err.message);
+    } 
 }

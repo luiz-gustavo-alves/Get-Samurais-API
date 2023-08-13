@@ -1,16 +1,15 @@
 import { Router } from "express";
 
 import {
-    getProfile,
-    getServicesStatus
+    getUserProfile,
+    getServiceProviderProfile
 } from "../controllers/user.controller.js";
 
 import { authValidation } from "../middlewares/authValidation.js";
 
 const userRouter = Router();
-userRouter.use(authValidation);
 
-userRouter.get("/profile", getProfile);
-userRouter.get("/profile/services/status", getServicesStatus)
+userRouter.get("/profile/me", authValidation, getUserProfile);
+userRouter.get("/profile/service-provider/:id", getServiceProviderProfile);
 
 export default userRouter;
