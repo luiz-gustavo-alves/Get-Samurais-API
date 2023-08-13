@@ -44,7 +44,7 @@ const getServiceById = async (id) => {
             ON addresses.id = services."serviceProviderId"
          JOIN "serviceProviders"
             ON "serviceProviders".id = services."serviceProviderId"
-         WHERE available = 1::bit AND services.id = $1;
+         WHERE services.id = $1;
         `, [id]
     );
 
