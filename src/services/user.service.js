@@ -82,7 +82,7 @@ const getServiceProviderProfile = async (id, offset) => {
 const countSearchServiceByQuery = async (query) => {
 
     const counter = await db.query(
-        `SELECT COUNT(*) FROM services
+        `SELECT DISTINCT COUNT(*) FROM services
          WHERE available = 1::bit AND title LIKE '%'||$1||'%'
         `, [query]
     )
@@ -101,7 +101,7 @@ const searchServiceByQuery = async (query, order, offset) => {
     if (order === "price") {
 
         services = await db.query(
-            `SELECT * FROM services
+            `SELECT DISTINCT * FROM services
              WHERE available = 1::bit AND LOWER(title) LIKE LOWER('%'||$1||'%')
                 ORDER BY price DESC
                 LIMIT 20 OFFSET $2;
@@ -111,7 +111,7 @@ const searchServiceByQuery = async (query, order, offset) => {
     } else if (order === "role")  {
 
         services = await db.query(
-            `SELECT * FROM services
+            `SELECT DISTINCT * FROM services
              WHERE available = 1::bit AND LOWER(title) LIKE LOWER('%'||$1||'%')
                 ORDER BY role DESC
                 LIMIT 20 OFFSET $2;
@@ -121,7 +121,7 @@ const searchServiceByQuery = async (query, order, offset) => {
     } else if (order === "date") {
         
         services = await db.query(
-            `SELECT * FROM services
+            `SELECT DISTINCT * FROM services
              WHERE available = 1::bit AND LOWER(title) LIKE LOWER('%'||$1||'%')
                 ORDER BY id DESC
                 LIMIT 20 OFFSET $2;
