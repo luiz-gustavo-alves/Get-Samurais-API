@@ -4,7 +4,18 @@ const countCreatedServices = async (id) => {
 
     const counter = await db.query(
         `SELECT COUNT(*) FROM services
-         WHERE "serviceProviderId" = $1
+         WHERE "serviceProviderId" = $1;
+        `, [id]
+    )
+
+    return counter.rows[0].count;
+}
+
+const countCreatedAvailableServices = async (id) => {
+
+    const counter = await db.query(
+        `SELECT COUNT(*) FROM services
+         WHERE available = 1::bit AND "serviceProviderId" = $1;
         `, [id]
     )
 
@@ -95,13 +106,14 @@ const deleteService = async (id) => {
 
     await db.query(
         `DELETE FROM services
-         WHERE id = $1
+         WHERE id = $1;
         `, [id]
     );
 }
 
 const serviceProviderService = {
     countCreatedServices,
+    countCreatedAvailableServices,
     getServiceProviderSession,
     getCreatedServices,
     createService,

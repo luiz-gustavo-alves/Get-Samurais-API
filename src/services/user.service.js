@@ -55,7 +55,7 @@ const getServiceProviderProfile = async (id, offset) => {
         return [];
     }
 
-    const counter = await serviceProviderService.countCreatedServices(id);
+    const counter = await serviceProviderService.countCreatedAvailableServices(id);
 
     const currentOffset = 10 * (offset);
     const servicesFromProvider = await db.query(
