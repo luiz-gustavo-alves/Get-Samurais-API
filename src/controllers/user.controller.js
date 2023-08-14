@@ -16,9 +16,10 @@ export const getUserProfile =  async (req, res) => {
 export const getServiceProviderProfile = async (req, res) => {
 
     const { id } = req.params;
+    const { offset } = req.query;
     
     try {
-        const serviceProviderProfileInfo = await userService.getServiceProviderProfile(id);
+        const serviceProviderProfileInfo = await userService.getServiceProviderProfile(id, offset);
         res.send(serviceProviderProfileInfo);
 
     } catch (err) {

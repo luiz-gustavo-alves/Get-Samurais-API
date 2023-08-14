@@ -6,7 +6,7 @@ export const getServices = async (req, res) => {
 
     try {
         const services = await serviceService.getServices(offset);
-        res.send(services.rows);
+        res.send(services);
 
     } catch (err) {
         res.status(500).send(err.message);
@@ -20,7 +20,7 @@ export const getServicesByRole = async (req, res) => {
 
     try {
         const services = await serviceService.getServicesByRole(role, offset);
-        res.send(services.rows);
+        res.send(services);
 
     } catch (err) {
 

@@ -7,7 +7,7 @@ export const getCreatedServices = async (req, res) => {
 
     try {
         const services = await serviceProviderService.getCreatedServices(serviceProviderId, offset);
-        res.send(services.rows);
+        res.send(services);
 
     } catch (err) {
         res.status(500).send(err.message);

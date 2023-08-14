@@ -1,6 +1,28 @@
 import db from "../database/db.connection.js";
 
+const countAllServices = async () => {
+
+    const counter = await db.query(
+        `SELECT COUNT(*) FROM services;`
+    )
+
+    return counter.rows[0];
+}
+
+const countServicesByRole = async (role) => {
+
+    const counter = await db.query(
+        `SELECT COUNT(*) FROM services
+         WHERE services.role = $1;
+        `, [role]
+    )
+
+    return counter.rows[0];
+}
+
 const getServices = async (offset) => {
+
+    const counter = await serviceService.countAllServices();
 
     const currentOffset = 20 * (offset);
     const services = await db.query(
@@ -11,10 +33,18 @@ const getServices = async (offset) => {
         `, [currentOffset]
     );
 
-    return services;
+    const servicesList = services.rows.map(service => service);
+    const result = {
+        counter,
+        data: [...servicesList]
+    }
+
+    return result;
 }
 
 const getServicesByRole = async (role, offset) => {
+
+    const counter = await serviceService.countServicesByRole(role);
 
     const currentOffset = 20 * (offset);
     const services = await db.query(
@@ -25,7 +55,13 @@ const getServicesByRole = async (role, offset) => {
         `, [role, currentOffset]
     );
 
-    return services;
+    const servicesList = services.rows.map(service => service);
+    const result = {
+        counter,
+        data: [...servicesList]
+    }
+
+    return result;
 }
 
 const getServiceById = async (id) => {
@@ -52,6 +88,8 @@ const getServiceById = async (id) => {
 }
 
 const serviceService = {
+    countAllServices,
+    countServicesByRole,
     getServices,
     getServicesByRole,
     getServiceById

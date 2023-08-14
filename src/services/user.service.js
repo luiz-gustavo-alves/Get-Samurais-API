@@ -1,6 +1,6 @@
 import db from "../database/db.connection.js";
 import authService from "./auth.service.js";
-import bcrypt from "bcrypt";
+import serviceProviderService from "./serviceProvider.service.js";
 
 const getProfileInfo = async (payload, token) => {
 
@@ -39,7 +39,7 @@ const getProfileInfo = async (payload, token) => {
     }
 }
 
-const getServiceProviderProfile = async (id) => {
+const getServiceProviderProfile = async (id, offset) => {
 
     const serviceProviderInfo = await db.query(
         `SELECT "serviceProviders".*,
@@ -55,10 +55,15 @@ const getServiceProviderProfile = async (id) => {
         return [];
     }
 
+    const counter = await serviceProviderService.countCreatedServices(id);
+
+    const currentOffset = 10 * (offset);
     const servicesFromProvider = await db.query(
         `SELECT * FROM services
-         WHERE services."serviceProviderId" = $1;
-        `, [id]
+         WHERE services."serviceProviderId" = $1
+            ORDER BY id DESC
+            LIMIT 10 OFFSET $2;
+        `, [id, currentOffset]
     )
 
     delete serviceProviderInfo.rows[0].addressId
@@ -66,6 +71,7 @@ const getServiceProviderProfile = async (id) => {
 
     const services = servicesFromProvider.rows.map(service => service);
     const result = {
+        counter,
         info: {...serviceProviderInfo.rows[0]},
         services
     }

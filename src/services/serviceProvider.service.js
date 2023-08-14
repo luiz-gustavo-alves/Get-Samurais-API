@@ -1,5 +1,16 @@
 import db from "../database/db.connection.js"
 
+const countCreatedServices = async (id) => {
+
+    const counter = await db.query(
+        `SELECT COUNT(*) FROM services
+         WHERE "serviceProviderId" = $1
+        `, [id]
+    )
+
+    return counter.rows[0];
+}
+
 const getServiceProviderSession = async (token) => {
 
     const serviceProviderSession = await db.query(
@@ -14,6 +25,8 @@ const getServiceProviderSession = async (token) => {
 
 const getCreatedServices = async (id, offset) => {
 
+    const counter = await serviceProviderService.countCreatedServices(id);
+
     const currentOffset = 10 * (offset);
     const services = await db.query(
         `SELECT *
@@ -24,7 +37,13 @@ const getCreatedServices = async (id, offset) => {
         `, [id, currentOffset]
     )
 
-    return services;
+    const servicesList = services.rows.map(service => service);
+    const result = {
+        counter,
+        data: [...servicesList]
+    }
+
+    return result;
 }
 
 const createService = async (payload, id) => {
@@ -82,6 +101,7 @@ const deleteService = async (id) => {
 }
 
 const serviceProviderService = {
+    countCreatedServices,
     getServiceProviderSession,
     getCreatedServices,
     createService,
