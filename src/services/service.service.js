@@ -3,7 +3,8 @@ import db from "../database/db.connection.js";
 const countAllServices = async () => {
 
     const counter = await db.query(
-        `SELECT COUNT(*) FROM services;`
+        `SELECT COUNT(*) FROM services
+         WHERE available = 1::bit;`
     )
 
     return counter.rows[0].count;
@@ -13,7 +14,7 @@ const countServicesByRole = async (role) => {
 
     const counter = await db.query(
         `SELECT COUNT(*) FROM services
-         WHERE services.role = $1;
+         WHERE available = 1::bit AND services.role = $1;
         `, [role]
     )
 

@@ -30,3 +30,16 @@ export const getServiceProviderProfile = async (req, res) => {
         res.status(500).send(err.message);
     } 
 }
+
+export const searchServiceByQuery = async (req, res) => {
+
+    const { query, order, offset } = req.query;
+
+    try {
+        const result = await userService.searchServiceByQuery(query, order, offset);
+        res.send(result);
+
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}

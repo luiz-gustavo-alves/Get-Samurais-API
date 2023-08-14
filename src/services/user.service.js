@@ -60,7 +60,7 @@ const getServiceProviderProfile = async (id, offset) => {
     const currentOffset = 10 * (offset);
     const servicesFromProvider = await db.query(
         `SELECT * FROM services
-         WHERE services."serviceProviderId" = $1
+         WHERE available = 1::bit AND services."serviceProviderId" = $1
             ORDER BY id DESC
             LIMIT 10 OFFSET $2;
         `, [id, currentOffset]
@@ -79,9 +79,61 @@ const getServiceProviderProfile = async (id, offset) => {
     return result;
 }
 
+const countSearchServiceByQuery = async (query) => {
+
+    const counter = await db.query(
+        `SELECT COUNT(*) FROM services
+         WHERE available = 1::bit AND title LIKE '%'||$1||'%'
+        `, [query]
+    )
+
+    return counter.rows[0].count;
+}
+
+const searchServiceByQuery = async (query, order, offset) => {
+
+    const counter = await userService.countSearchServiceByQuery(query);
+
+    const currentOrder = (!order || order === "date") ? "id" : order;
+    const currentOffset = 20 * (offset);
+
+    let services;
+
+    /* Hardcoded cuz for some odd reason SQL can't read price from query param */
+    if (currentOrder === "price") {
+
+        services = await db.query(
+            `SELECT * FROM services
+             WHERE available = 1::bit AND LOWER(title) LIKE LOWER('%'||$1||'%')
+                ORDER BY price DESC
+                LIMIT 20 OFFSET $2;
+            `, [query, currentOffset]
+        )
+
+    } else {
+
+        services = await db.query(
+            `SELECT * FROM services
+             WHERE available = 1::bit AND LOWER(title) LIKE LOWER('%'||$1||'%')
+                ORDER BY $2 DESC
+                LIMIT 20 OFFSET $3;
+            `, [query, currentOrder, currentOffset]
+        )
+    }
+
+    const servicesList = services.rows.map(service => service);
+    const result = {
+        counter,
+        data: [...servicesList]
+    }
+    return result;
+}
+
 const userService = {
     getProfileInfo,
-    getServiceProviderProfile
+    getServiceProviderProfile,
+    countSearchServiceByQuery,
+    searchServiceByQuery
 }
 
 export default userService;
