@@ -93,14 +93,12 @@ const countSearchServiceByQuery = async (query) => {
 const searchServiceByQuery = async (query, order, offset) => {
 
     const counter = await userService.countSearchServiceByQuery(query);
-
-    const currentOrder = (!order || order === "date") ? "id" : order;
     const currentOffset = 20 * (offset);
 
-    let services;
+    /* Hardcoded cuz for some odd reason SQL can't read order from query param */
 
-    /* Hardcoded cuz for some odd reason SQL can't read price from query param */
-    if (currentOrder === "price") {
+    let services;
+    if (order === "price") {
 
         services = await db.query(
             `SELECT * FROM services
@@ -110,14 +108,24 @@ const searchServiceByQuery = async (query, order, offset) => {
             `, [query, currentOffset]
         )
 
-    } else {
+    } else if (order === "role")  {
 
         services = await db.query(
             `SELECT * FROM services
              WHERE available = 1::bit AND LOWER(title) LIKE LOWER('%'||$1||'%')
-                ORDER BY $2 DESC
-                LIMIT 20 OFFSET $3;
-            `, [query, currentOrder, currentOffset]
+                ORDER BY role DESC
+                LIMIT 20 OFFSET $2;
+            `, [query, currentOffset]
+        )
+
+    } else if (order === "date") {
+        
+        services = await db.query(
+            `SELECT * FROM services
+             WHERE available = 1::bit AND LOWER(title) LIKE LOWER('%'||$1||'%')
+                ORDER BY id DESC
+                LIMIT 20 OFFSET $2;
+            `, [query, currentOffset]
         )
     }
 

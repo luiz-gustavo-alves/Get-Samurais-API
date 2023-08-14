@@ -16,6 +16,6 @@ const userRouter = Router();
 
 userRouter.get("/profile/service-provider/:id", offsetValidation, getServiceProviderProfile);
 userRouter.post("/profile/me", authValidation, getUserProfile);
-userRouter.post("/search-service/", queryValidation(searchQuerySchema), offsetValidation, searchServiceByQuery);
+userRouter.post("/search-service", queryValidation(searchQuerySchema), offsetValidation, searchServiceByQuery);
 
 export default userRouter;
