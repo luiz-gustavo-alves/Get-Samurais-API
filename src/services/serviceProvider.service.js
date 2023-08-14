@@ -8,7 +8,7 @@ const countCreatedServices = async (id) => {
         `, [id]
     )
 
-    return counter.rows[0];
+    return counter.rows[0].count;
 }
 
 const getServiceProviderSession = async (token) => {

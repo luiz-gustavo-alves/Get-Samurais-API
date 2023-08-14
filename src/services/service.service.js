@@ -6,7 +6,7 @@ const countAllServices = async () => {
         `SELECT COUNT(*) FROM services;`
     )
 
-    return counter.rows[0];
+    return counter.rows[0].count;
 }
 
 const countServicesByRole = async (role) => {
@@ -17,7 +17,7 @@ const countServicesByRole = async (role) => {
         `, [role]
     )
 
-    return counter.rows[0];
+    return counter.rows[0].count;
 }
 
 const getServices = async (offset) => {
