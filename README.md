@@ -1,5 +1,5 @@
 # Get-Samurais-API <img width="40" height="40" src="https://cdn-icons-png.flaticon.com/512/410/410235.png" />
-Projeto _back-end_ para construção de uma aplicação de um sistema para prestação de serviços, conectando clientes e prestadores.
+Projeto _fullstack_ para construção de uma aplicação de um sistema para prestação de serviços, conectando clientes e prestadores.
 
 ## Requisitos Obrigatórios ⚠️
 
@@ -75,7 +75,7 @@ SERVICE_ROLE AS ENUM('tecnologia', 'marketing', 'arquitetura', 'financeiro', 'co
 );
 ```
 
-## Entrypoints ⚙️
+## Endpoints ⚙️
 ### 🚩 AuthRouter 🚩
 ### /signup/user
 ![](https://place-hold.it/80x20/26ec48/ffffff?text=POST&fontsize=16) Recebe **name, email** e **password** pelo _body_ e realiza o cadastro do usuário.<br>
@@ -131,8 +131,9 @@ SERVICE_ROLE AS ENUM('tecnologia', 'marketing', 'arquitetura', 'financeiro', 'co
   - **UrlRoute**:
     - ![](https://place-hold.it/80x20/26ec48/ffffff?text=POST&fontsize=16) **/profile/me**
 
-## Deploy Front-End do Projeto 💻
+## Links 💻
 
-| Plataforma | Deploy |
+| Descrição | Link |
 | --- | --- |
-| <a href="https://vercel.com/"><img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" /></a> | https://get-samurais-luiz-gustavo-alves.vercel.app/
+| Frontend | https://github.com/luiz-gustavo-alves/Get-Samurais-Front
+| Deploy | https://get-samurais-luiz-gustavo-alves.vercel.app/
