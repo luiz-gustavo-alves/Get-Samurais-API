@@ -131,6 +131,11 @@ SERVICE_ROLE AS ENUM('tecnologia', 'marketing', 'arquitetura', 'financeiro', 'co
   - **UrlRoute**:
     - ![](https://place-hold.it/80x20/26ec48/ffffff?text=POST&fontsize=16) **/profile/me**
 
+## Instruções para executar o projeto
+- Clone este repositório com o comando: `git clone https://github.com/luiz-gustavo-alves/Get-Samurais-API.git` ou faça o download manual dos arquivos do projeto.
+- Instale as dependências do projeto com o comando: `npm install`.
+- Execute o comando: `npm run dev` para inicializar o servidor em modo de desenvolvimento.
+
 ## Links 💻
 
 | Descrição | Link |
